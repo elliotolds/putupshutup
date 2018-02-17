@@ -1,6 +1,7 @@
 App = {
   web3Provider: null,
   contracts: {},
+  ipfs: null,
 
   init: function() {
     // Load pets.
@@ -18,6 +19,16 @@ App = {
 
         petsRow.append(petTemplate.html());
       }
+    });
+
+    App.ipfs = new IPFS();
+    App.ipfs.setProvider({ host: 'ipfs.infura.io', port: 5001, protocol: 'https' });
+    const hash = "QmQtwERJbXkS34fdQbk4HLyyW9sc4TXZ4XvAMUZwzCXPWD";
+    App.ipfs.cat(hash, (err, data) => {
+      if (err) {
+        return console.log(err);
+      }
+      console.log("DATA:", data);
     });
 
     return App.initWeb3();
