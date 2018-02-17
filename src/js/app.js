@@ -60,11 +60,38 @@ App = {
       return App.markAdopted();
     });
 
+    $.getJSON('Bet.json', function(data) {
+
+      // Get the necessary contract artifact file and instantiate it with truffle-contract
+      var BetArtifact = data;
+      App.contracts.Bet = TruffleContract(BetArtifact);
+    
+      // Set the provider for our contract
+      App.contracts.Bet.setProvider(App.web3Provider);
+    
+      // Use our contract to retrieve and mark the adopted pets
+      return App.testBet();
+    });
+
     return App.bindEvents();
   },
 
   bindEvents: function() {
     $(document).on('click', '.btn-adopt', App.handleAdopt);
+  },
+
+  testBet: function() {
+    console.log("Hello world!");  
+
+    var betInstance;
+
+    App.contracts.Bet.deployed().then(function(instance) {
+      betInstance = instance;
+    
+      return betInstance.resolveBet.call();
+    }).catch(function(err) {
+      console.log(err.message);
+    });
   },
 
   markAdopted: function(adopters, account) {
