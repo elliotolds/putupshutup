@@ -15,14 +15,14 @@ contract PutUpOrShutUp {
     bytes32 _hashOfBet) public returns (bool)
   {
 
-      Bet b = new Bet(
-        _p1Address,
-        _p1AmountOwed,
-        _p2Address,
-        _p2AmountOwed,
-        _arbAddress,
-        _arbReward,
-        _hashOfBet);
+    Bet b = new Bet(
+      _p1Address,
+      _p1AmountOwed,
+      _p2Address,
+      _p2AmountOwed,
+      _arbAddress,
+      _arbReward,
+      _hashOfBet);
 
     bets[_hashOfBet] = b;
 
@@ -115,6 +115,10 @@ contract Bet {
     if ( msg.sender == arbAddress ) {
       arbitorAgreed = true;
     }
+
+    if ( arbitorAgreed && p1AmountPaid >= p1AmountOwed && p2AmountPaid >= p2AmountOwed ) {
+      betLockedIn = true;
+    }
   }
 
   function resolveBet( Resolution _res) public {
@@ -147,6 +151,8 @@ contract Bet {
   }
 
   function withdrawBeforeBetLocked() public {
+    require(!betLockedIn);
+
     if (msg.sender == p1Address) {
       p1Address.transfer(p1AmountPaid);
     } else if (msg.sender == p2Address) {
