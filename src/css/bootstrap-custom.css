@@ -6970,7 +6970,8 @@ a {
   text-decoration: underline;
 }
 .list-group a,
-a.card {
+a.card,
+a.btn {
   text-decoration: none;
 }
 

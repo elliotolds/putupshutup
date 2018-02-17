@@ -52,7 +52,7 @@ App = {
   },
 
   bindEvents: function() {
-    $('#test-btn').click(App.betButton)
+    $('#create-bet-btn').click(App.betButton)
   },
 
   betButton: function() {

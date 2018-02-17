@@ -111,7 +111,6 @@
                                                     <input type="number" name="bettor-amount" id="bettor-amount" class="form-control" value="0.00" required>
                                                 </div>
                                             </div>
-                                            <!-- <button type="submit" class="btn btn-secondary btn-lg float-right mt-3">Send Message</button> -->
                                         </fieldset>
                                     </form>
                                 </div>
@@ -150,7 +149,6 @@
                                                     <input type="number" name="bettor-amount" id="bettor-amount" class="form-control" value="0.00" required>
                                                 </div>
                                             </div>
-                                            <!-- <button type="submit" class="btn btn-secondary btn-lg float-right mt-3">Send Message</button> -->
                                         </fieldset>
                                     </form>
                                 </div>
@@ -159,16 +157,60 @@
                         <!-- /taker -->
 
                     </div>
+
+                    <hr>
+
+                    <div class="row">
+                        <div class="col-md-3"></div>
+                        <!-- arbitor -->
+                        <div class="col-md-6 mr-md-auto">
+                            <div class="border-secondary">
+                                <div class="card-header">
+                                    <h3 class="mb-0 my-2">In case the bet needs Arbitration</h3>
+                                </div>
+                                <div class="card-body">
+                                    <form class="form" role="form" autocomplete="off">
+                                        <fieldset>
+                                            <label for="arbitor-twitter" class="mb-0">Arbitrator Twitter</label>
+                                            <div class="row mb-1">
+                                                <div class="col-lg-12">
+                                                    <input type="text" name="arbitor-twitter" id="arbitor-twitter" class="form-control" value="@" required>
+                                                </div>
+                                            </div>
+
+                                            <label for="arbitor-wallet" class="mb-0">Arbitrator Public Eth Wallet</label>
+                                            <div class="row mb-1">
+                                                <div class="col-lg-12">
+                                                    <input type="text" name="arbitor-wallet" id="arbitor-wallet" class="form-control" value="0x627306090abaB3A6e1400e9345bC60c78a8BEf57" required>
+                                                </div>
+                                            </div>
+                                            
+                                            <label for="arbitor-amount" class="mb-0">Arbitrator Reward for arbitrating</label>
+                                            <div class="row mb-1">
+                                                <div class="col-lg-12">
+                                                    <input type="number" name="arbitor-amount" id="arbitor-amount" class="form-control" value="0.01" required>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /arbitor -->
+                    </div>
+
                     <div class="card-body">
                         <div class="form-group row">
                             
                             <div class="col-md-3">
-                                <button type="reset" class="btn btn-outline-secondary btn-lg btn-block" id="test-btn">Cancel</button>
+                                <a href="./" class="btn btn-outline-secondary btn-lg btn-block" id="test-btn">
+                                    Cancel
+                                </a>
                             </div>
                             <div class="col-md-6"></div>
 
                             <div class="col-md-3">
-                                <button type="submit" class="btn btn-success btn-lg btn-block">Create Bet</button>
+                                <button type="submit" class="btn btn-success btn-lg btn-block" id="create-bet-btn">Create Bet</button>
                             </div>
                         </div>
                     </div>
