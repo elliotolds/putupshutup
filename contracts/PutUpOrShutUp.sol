@@ -12,7 +12,8 @@ contract PutUpOrShutUp {
     uint _p2AmountOwed,
     address _arbAddress,
     uint _arbReward,
-    bytes32 _hashOfBet) public returns (bool) {
+    bytes32 _hashOfBet) public returns (bool)
+  {
 
       Bet b = new Bet(
         _p1Address,
@@ -25,8 +26,9 @@ contract PutUpOrShutUp {
 
     bets[_hashOfBet] = b;
 
-    // TODO: poopulate betsForUser
-    //betsForUser[_p1Address]
+    betsForUser[_p1Address].push(_hashOfBet);
+    betsForUser[_p2Address].push(_hashOfBet);
+    betsForUser[_arbAddress].push(_hashOfBet);
     
     return true;
   }
@@ -177,7 +179,7 @@ contract Bet {
 
   }
 
-  function getBetInfo() public returns (address, uint, uint, address, uint, uint, address, uint) {
+  function getBetInfo() public pure returns (address, uint, uint, address, uint, uint, address, uint) {
 
     return (0xf17f52151EbEF6C7334FAD080c5704D77216b732, 10, 0, 0x627306090abaB3A6e1400e9345bC60c78a8BEf57, 10, 0, 0xC5fdf4076b8F3A5357c5E395ab970B5B54098Fef, 2);
   }
