@@ -7,11 +7,11 @@ contract PutUpOrShutUp {
 
   function startNewBet(
     address _p1Address,
-    uint p1AmountOwed,
+    uint _p1AmountOwed,
     address _p2Address,
-    uint p2AmountOwed,
+    uint _p2AmountOwed,
     address _arbAddress,
-    uint arbReward,
+    uint _arbReward,
     bytes32 _hashOfBet) public returns (bool) {
     
     return true;
@@ -36,8 +36,8 @@ contract Bet {
 
   }
 
-  function getBetInfo() public returns (address, uint, address, uint, address, uint) {
+  function getBetInfo() public returns (address, uint, uint, address, uint, uint, address, uint) {
 
-    return (0xf17f52151EbEF6C7334FAD080c5704D77216b732, 10, 0x627306090abaB3A6e1400e9345bC60c78a8BEf57, 10, 0xC5fdf4076b8F3A5357c5E395ab970B5B54098Fef, 2);
+    return (0xf17f52151EbEF6C7334FAD080c5704D77216b732, 10, 0, 0x627306090abaB3A6e1400e9345bC60c78a8BEf57, 10, 0, 0xC5fdf4076b8F3A5357c5E395ab970B5B54098Fef, 2);
   }
 }

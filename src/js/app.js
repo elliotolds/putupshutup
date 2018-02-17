@@ -92,6 +92,21 @@ App = {
     }).catch(function(err) {
       console.log(err.message);
     });
+
+    App.contracts.Bet.deployed().then(function(instance) {
+      betInstance = instance;
+    
+      return betInstance.getBetInfo.call();
+    }).then(function(p1Address, p1AmountOwed, p1AmountPaid, p2Address, p2AmountOwed, p2AmountPaid, arbAddress, arbReward) {
+      
+      console.log(p1Address);
+      console.log(p2Address);
+      console.log(arbAddress);
+
+    }).catch(function(err) {
+      console.log(err.message);
+    });
+
   },
 
   markAdopted: function(adopters, account) {
