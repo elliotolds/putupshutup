@@ -41,7 +41,7 @@ App = {
       App.contracts.Bet.setProvider(App.web3Provider);
     
       // Use our contract to retrieve and mark the adopted pets
-      return loadBets();
+      return App.loadBets();
     });
 
     return App.bindEvents();
@@ -49,6 +49,7 @@ App = {
 
   loadBets: function() {
     console.log("Hello world!"); 
+    console.log(App);
   },
 
   bindEvents: function() {
@@ -56,8 +57,25 @@ App = {
   },
 
   betButton: function() {
-    let a = new Bet(App.contracts, App.ipfs)
+    let a = new Bet(App.contracts, App.ipfs, App.getBetFormValues());
     a.getFundingStatus()
+  },
+
+  getBetFormValues: function() {
+    var newBetProperties = {};
+    newBetProperties.title = document.getElementById('bet-title').value;
+    newBetProperties.descriptionText = document.getElementById('bet-language').value;
+    newBetProperties.instigatorHandle = document.getElementById('bettor-twitter').value;
+    newBetProperties.instigatorAddress = document.getElementById('bettor-wallet').value;
+    newBetProperties.instigatorBetAmount = document.getElementById('bettor-amount').value;
+    newBetProperties.takerHandle = document.getElementById('taker-twitter').value;
+    newBetProperties.targetAddress = document.getElementById('taker-wallet').value;
+    newBetProperties.targetBetAmount = document.getElementById('taker-amount').value;
+    newBetProperties.arbiterHandle = document.getElementById('arbiter-twitter').value;
+    newBetProperties.arbiterAddress = document.getElementById('arbiter-wallet').value;
+    newBetProperties.arbiterFee = document.getElementById('arbiter-amount').value;
+
+    return newBetProperties;
   },
 
 };
