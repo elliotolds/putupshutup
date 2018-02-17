@@ -16,11 +16,11 @@ contract PutUpOrShutUp {
 
       Bet b = new Bet(
         _p1Address,
-        p1AmountOwed,
+        _p1AmountOwed,
         _p2Address,
-        p2AmountOwed,
+        _p2AmountOwed,
         _arbAddress,
-        arbReward,
+        _arbReward,
         _hashOfBet);
 
     bets[_hashOfBet] = b;
@@ -65,7 +65,7 @@ contract Bet {
   bool arbiterDidWork;
 
   function Bet(
-    address _p1Addrress,
+    address _p1Address,
     uint _p1Owed,
     address _p2Address,
     uint _p2Owed,
@@ -85,7 +85,7 @@ contract Bet {
   function depositFunds() public payable {
     if ( msg.sender == p1Address) {
       p1AmountPaid += msg.value;
-    } else if (msg.sender == p2.Address) {
+    } else if (msg.sender == p2Address) {
       p2AmountPaid += msg.value;
     }
 
@@ -150,14 +150,14 @@ contract Bet {
     
     // if there was a winner, disperse the rest of the funds to them
     if (officialResolution == Resolution.P1Wins) {
-      p1Address.transfer(balance);
+      p1Address.transfer(this.balance);
     } else if (officialResolution == Resolution.P2Wins) {
-      p2address.transfer(balance);
+      p2Address.transfer(this.balance);
     } else {
       // It was a tie -- disperse funds in proportion to what they paid in
       // TODO: fix this... it's currently broken
-      p1Address.transfer(balance/2); // WRONG
-      p2Address.transfer(balance);  
+      p1Address.transfer(this.balance/2); // WRONG
+      p2Address.transfer(this.balance);  
     }
 
   }
