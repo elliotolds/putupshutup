@@ -41,7 +41,7 @@ contract PutUpOrShutUp {
     return betsForUser[_userAddress];
   }
 
-  function getDemoBet() public view returns (Bet) {
+  function getDemoBet() public returns (Bet) {
 
     Bet b = new Bet(
         0xf17f52151EbEF6C7334FAD080c5704D77216b732, 
