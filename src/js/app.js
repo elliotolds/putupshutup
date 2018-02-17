@@ -60,14 +60,14 @@ App = {
       return App.markAdopted();
     });
 
-    $.getJSON('Bet.json', function(data) {
+    $.getJSON('PutUpOrShutUp.json', function(data) {
 
       // Get the necessary contract artifact file and instantiate it with truffle-contract
-      var BetArtifact = data;
-      App.contracts.Bet = TruffleContract(BetArtifact);
+      var PutUpOrShutUpArtifact = data;
+      App.contracts.PutUpOrShutUp = TruffleContract(PutUpOrShutUpArtifact);
     
       // Set the provider for our contract
-      App.contracts.Bet.setProvider(App.web3Provider);
+      App.contracts.PutUpOrShutUp.setProvider(App.web3Provider);
     
       // Use our contract to retrieve and mark the adopted pets
       return App.testBet();
@@ -92,7 +92,21 @@ App = {
 
     var betInstance;
 
-    App.contracts.Bet.deployed().then(function(instance) {
+
+    App.contracts.PutUpOrShutUp.deployed().then(function(instance) {
+      betInstance = instance;
+    
+      return betInstance.getDemoBet();
+    }).then(function(response) {
+      
+      console.log(response);
+
+    }).catch(function(err) {
+      console.log(err.message);
+    });
+
+/*
+    App.contracts.PutUpOrShutUp.deployed().then(function(instance) {
       betInstance = instance;
     
       return betInstance.resolveBet.call();
@@ -100,7 +114,7 @@ App = {
       console.log(err.message);
     });
 
-    App.contracts.Bet.deployed().then(function(instance) {
+    App.contracts.PutUpOrShutUp.deployed().then(function(instance) {
       betInstance = instance;
     
       return betInstance.getBetInfo.call();
@@ -113,7 +127,7 @@ App = {
     }).catch(function(err) {
       console.log(err.message);
     });
-
+*/
   },
 
   markAdopted: function(adopters, account) {
