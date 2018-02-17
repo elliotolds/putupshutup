@@ -78,6 +78,13 @@ App = {
 
   bindEvents: function() {
     $(document).on('click', '.btn-adopt', App.handleAdopt);
+    $('#test-btn').click(App.betButton)
+  },
+
+  betButton: function() {
+    console.log("-----")
+    let a = new Bet(App.contracts, App.ipfs)
+    a.getFundingStatus()
   },
 
   testBet: function() {
