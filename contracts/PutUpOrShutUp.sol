@@ -164,7 +164,7 @@ contract Bet {
     require(officialResolution != Resolution.None);
 
     // First ensure arbiter is paid
-    if (this.balance < arbReward) {
+    if (this.balance <= arbReward) {
       arbAddress.transfer(this.balance);
       return;
     } else {
@@ -178,16 +178,22 @@ contract Bet {
       p2Address.transfer(this.balance);
     } else {
       // It was a tie -- disperse funds in proportion to what they paid in
-      // TODO: fix this... it's currently broken
-      p1Address.transfer(this.balance/2); // WRONG
-      p2Address.transfer(this.balance);  
+
+      if (p1AmountOwed == p2AmountOwed) {
+        // Save ourseleves some expensive math calculations in the case that both owed the same amount
+        p1Address.transfer(this.balance/2); 
+        p2Address.transfer(this.balance);
+      } else {
+        // Return the fraction of the remaining funds to p1 corresponding to the fraction of the total they paid
+        p1Address.transfer((this.balance * uint256(p1AmountOwed)) / (p1AmountOwed + p2AmountOwed));
+        p2Address.transfer(this.balance);
+      }
     }
 
   }
 
   function getBetInfo() public pure returns (address, uint, uint, address, uint, uint, address, uint) {
-
-    return (0xf17f52151EbEF6C7334FAD080c5704D77216b732, 10, 0, 0x627306090abaB3A6e1400e9345bC60c78a8BEf57, 10, 0, 0xC5fdf4076b8F3A5357c5E395ab970B5B54098Fef, 2);
+    return (p1Address, p1AmountOwed, p1AmountPaid, p2Address, p2AmountOwed, p2AmountPaid, arbAddress, arbReward);
   }
 
 }
