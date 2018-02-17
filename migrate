@@ -1,0 +1,5 @@
+#!/bin/bash
+echo migrating
+rm ./build/contracts/*.json
+truffle migrate
+npm run dev
