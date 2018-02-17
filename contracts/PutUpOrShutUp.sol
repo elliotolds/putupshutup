@@ -192,7 +192,7 @@ contract Bet {
 
   }
 
-  function getBetInfo() public pure returns (address, uint, uint, address, uint, uint, address, uint) {
+  function getBetInfo() public view returns (address, uint, uint, address, uint, uint, address, uint) {
     return (p1Address, p1AmountOwed, p1AmountPaid, p2Address, p2AmountOwed, p2AmountPaid, arbAddress, arbReward);
   }
 
