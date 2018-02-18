@@ -91,7 +91,7 @@ contract Bet {
     bytes32 _hashOfBet
   ) {
 
-    require(_p1Owed > arbReward && p2Owed > arbReward);
+    require(_p1Owed > arbReward && _p2Owed > arbReward);
 
     p1Address = _p1Address;
     p1AmountOwed = _p1Owed;
