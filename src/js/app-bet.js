@@ -65,6 +65,8 @@ App = {
       $('#bettor-funds-btn').removeClass('hidden');
     } else if (App.currentAccount == App.bet.targetAddress.toLowerCase()) {
       $('#taker-funds-btn').removeClass('hidden');
+    } else if (App.currentAccount == App.bet.arbiterAddress.toLowerCase()) {
+      $('#arbiter-agree-prompt').removeClass('hidden');
     }
   },
 
@@ -75,6 +77,7 @@ App = {
     $('#taker-wins-btn').click({winner: "taker"}, App.voteWinner);
     $('#taker-funds-btn').click({funder: "taker"}, App.fundBet);
     $('#tie-btn').click({winner: "tie"}, App.voteWinner);
+    $('#affirm-arbitrate-btn').click(App.agreeArbitrate);
   },
 
   voteWinner: function(e) {
@@ -87,6 +90,12 @@ App = {
     e.preventDefault();
     // make a call to smart contract
     console.log(e.data.funder + " funded bet");
+  },
+
+  agreeArbitrate: function(e) {
+    e.preventDefault();
+
+    console.log("Arbiter agreed to arbitrate");
   },
 
   loadBet: function() {
@@ -103,7 +112,7 @@ App = {
 
   dummyData: function() {
     var betData = {};
-    betData.arbiterAddress = "0x627306090abaB3A6e1400e9345bC60c78a8BEf57"
+    betData.arbiterAddress = "0x089E216791A8cD9A9f281D95346CBF5B25059E0D"
     betData.arbiterFee = "0.0005"
     betData.arbiterHandle = "@impartial_judge"
     betData.descriptionText = "Donec erat velit, ullamcorper vel libero sit amet, porta lobortis velit. Vestibulum varius eros at pulvinar consequat. Sed mi lorem, scelerisque nec odio sed, laoreet laoreet purus. Vestibulum laoreet consectetur arcu, vel vehicula odio pellentesque id. Fusce interdum, eros eu egestas sollicitudin, massa neque molestie lectus, non placerat est ante a urna."
