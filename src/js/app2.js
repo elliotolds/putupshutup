@@ -151,7 +151,7 @@ function acceptedBetView(bet) {
           <br>
           1.00 eth <span class="text-muted small"> <!--on </span> 2.18.2018-->
           <br>
-          <a href="bet.html/${bet.betId}" class="link small text-truncate">View Bet</a>
+          <a href="bet.html?id=${bet.betId}" class="link small text-truncate">View Bet</a>
       </div>
   </div>
 </li>`
@@ -171,7 +171,7 @@ function proposedBetView(bet) {
           <br>
           1.00 eth <span class="text-muted small"><!-- on </span> 2.18.2018-->
           <br>
-          <a href="bet.html" class="link small text-truncate">View Bet</a>
+          <a href="bet.html?id=${bet.betId}" class="link small text-truncate">View Bet</a>
       </div>
   </div>
 </li>`
