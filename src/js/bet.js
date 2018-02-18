@@ -24,8 +24,9 @@ class BetDescription {
         if (this.addr == "" && this.description != "") {
             //save to ipfs
             //this.ipfsAddress = 
-            return this.ipfsAddress
         }
+        this.ipfsAddress = "hashhashhash"//TEST
+        return this.ipfsAddress
     }
 
     getText() {
@@ -75,32 +76,21 @@ class Bet {
     }
 
     create() {
-        //validate
         //ipfs description
-        let ipft_addr = "hashhashhash"// this.description.getAddress()
+        let ipft_addr = this.description.getAddress()
+        //validate
+        if(ipft_addr == "") {
+            throw "you need to write a bet you dummy!" 
+        }
         //web3 create contract
 
-        var betInstance
         this.contracts.PutUpOrShutUp.deployed().then(instance => {
-            betInstance = instance;
-          
-            return betInstance.startNewBet(this.instigatorAddress, this.instigatorBetAmount, this.targetAddress, this.targetBetAmount, this.arbiterAddress, this.arbiterFee, ipft_addr);
-          }).then(function(response) {
-            
-            console.log("-----")
-            console.log(response);
-            console.log("-----")
+            return instance.startNewBet(this.instigatorAddress, this.instigatorBetAmount, this.targetAddress, this.targetBetAmount, this.arbiterAddress, this.arbiterFee, ipft_addr)
           }).then(function(){
-              return betInstance.getBet(ipft_addr)
-          }).then(function(response){
-            console.log("-----")
-            console.log(response);
-            console.log("-----")              
+            window.location.href = `/bet.html?id=${ipft_addr}`
           }).catch(function(err) {
             console.log(err.message);
           });
-      
-        //this.betId = 
     }
 
     load(betId) {
