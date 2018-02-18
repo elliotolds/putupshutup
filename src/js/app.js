@@ -138,7 +138,6 @@ App = {
 
     var putUpShutUpInstance;
 
-
     App.contracts.PutUpOrShutUp.deployed().then(function(instance) {
       putUpShutUpInstance = instance;
     

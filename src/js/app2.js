@@ -40,15 +40,24 @@ App = {
       // Set the provider for our contract
       App.contracts.Bet.setProvider(App.web3Provider);
     
-      // Use our contract to retrieve and mark the adopted pets
-      return App.loadBets();
+      $.getJSON('PutUpOrShutUp.json', function(data) {
+
+        // Get the necessary contract artifact file and instantiate it with truffle-contract
+        var PutUpOrShutUpArtifact = data;
+        App.contracts.PutUpOrShutUp = TruffleContract(PutUpOrShutUpArtifact);
+      
+        // Set the provider for our contract
+        App.contracts.PutUpOrShutUp.setProvider(App.web3Provider);
+        return App.loadBets();
+      });
+      
     });
 
     return App.bindEvents();
   },
 
-  loadBets: function() {
-    App.bets = getAllMyBets(App.contracts, App.ipfs)
+  loadBets: async function() {
+    App.bets = await getAllMyBets(App.contracts, App.ipfs)
     return this.displayBets()
   },
 

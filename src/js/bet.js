@@ -137,6 +137,7 @@ class Bet {
 
             console.log(betData)
 
+            this.betId = bet_address
             this.instigatorAddress = betData.p1Address
             this.targetAddress = betData.p2Address
             this.instigatorBetAmount = betData.p1Owes
@@ -159,13 +160,24 @@ class Bet {
     }
 
     status() {
-        // if(this.betId == "") {
-        //     return "uninitilized"
-        // }
+        if(!this.loadedFromContract) {
+            throw "must have already loaded Bet"
+        }
+        if(this.betId == "") {
+            return "uninitilized"
+        }
         //web3 check
         // return 'open', 'accepted', 'closed' ?
-        let responses = ['uninitilized', 'open', 'accepted', 'closed'] //TEST
-        return responses[Math.floor(Math.random()*responses.length)] //TEST
+        if(this.betData.officialResolution != 0) {
+            return 'closed'
+        } else if(this.betData.betLockedIn) {
+            return 'accepted'
+        } else {
+            return 'open'
+        }
+
+        // let responses = ['uninitilized', 'open', 'accepted', 'closed'] //TEST
+        // return responses[Math.floor(Math.random()*responses.length)] //TEST
     }
 
     fundInFull() {
@@ -187,25 +199,47 @@ class Bet {
     }
  }
 
- function getAllMyBets(contracts, ipfs) {
-     let dummyData = {
-        arbiterAddress: "0x627306090abaB3A6e1400e9345bC60c78a8BEf57",
-        arbiterFee: "0.01",
-        betId: "ABCDE",
-        descriptionText: "bet @TheOnion is not completly accurate.",
-        instigatorAddress: "0x627306090abaB3A6e1400e9345bC60c78a8BEf57",
-        instigatorBetAmount: "1.00",
-        loadedFromContract: true,
-        targetAddress: "0x627306090abaB3A6e1400e9345bC60c78a8BEf57",
-        targetBetAmount: "1.55",
-        title: "Someone was wrong on the Interwebs!"
-     }
+ async function getAllMyBets(contracts, ipfs) {
+    //  let dummyData = {
+    //     arbiterAddress: "0x627306090abaB3A6e1400e9345bC60c78a8BEf57",
+    //     arbiterFee: "0.01",
+    //     betId: "ABCDE",
+    //     descriptionText: "bet @TheOnion is not completly accurate.",
+    //     instigatorAddress: "0x627306090abaB3A6e1400e9345bC60c78a8BEf57",
+    //     instigatorBetAmount: "1.00",
+    //     loadedFromContract: true,
+    //     targetAddress: "0x627306090abaB3A6e1400e9345bC60c78a8BEf57",
+    //     targetBetAmount: "1.55",
+    //     title: "Someone was wrong on the Interwebs!"
+    //  }
 
-     let builder = () => betBuilder(contracts, ipfs)(dummyData)
-     let a = builder({title: "title 1"})
-     let b = builder({title: "the king"})
-     let c = builder({title: "kaboom"})
-     return [a,b,c, builder(dummyData), builder(), builder(), builder(), builder(), builder(), builder(), builder(), builder()]
+    //  let builder = () => betBuilder(contracts, ipfs)(dummyData)
+    //  let a = builder({title: "title 1"})
+    //  let b = builder({title: "the king"})
+    //  let c = builder({title: "kaboom"})
+    //  return [a,b,c, builder(dummyData), builder(), builder(), builder(), builder(), builder(), builder(), builder(), builder()]
+     let builder = betBuilder(contracts, ipfs)
+     let bb = (ipfs_hash) => builder().load(ipfs_hash)
+
+     
+     let bets = []
+     try {
+        let pusu = await contracts.PutUpOrShutUp.deployed()
+        let bets_response = await pusu.getBetsForUser.call(web3.eth.defaultAccount)
+
+        console.log("GETBETSFORUSER")
+        console.log(bets_response)
+
+        for(var i = 0; i < bets_response.length; i++) {
+            let bet = builder()
+            await bet.load(bets_response[i])
+            bets.push(bet)
+        }
+
+    } catch(e) {
+        console.log(e.message)
+    }
+    return bets
  }
 
  function betBuilder(contracts, ipfs) {
