@@ -132,17 +132,38 @@ App = {
 
   },
 
+  getBetsForUser: function() {
+    console.log("getBetsForUser");  
+
+    var putUpShutUpInstance;
+
+
+    App.contracts.PutUpOrShutUp.deployed().then(function(instance) {
+      putUpShutUpInstance = instance;
+    
+      return putUpShutUpInstance.getBetsForUser.call(web3.eth.defaultAccount);
+    }).then(function(response) {
+      
+      console.log("getBetsForUser");
+      console.log(response);
+  
+
+    }).catch(function(err) {
+      console.log(err.message);
+    });
+
+  },
 
   getBetForHash: function() {
     console.log("getBetForHash");  
 
-    var betInstance;
+    var putUpShutUpInstance;
 
 
     App.contracts.PutUpOrShutUp.deployed().then(function(instance) {
-      betInstance = instance;
+      putUpShutUpInstance = instance;
     
-      return betInstance.getBet.call("fdksfhsdfdkasfjsdklaf");
+      return putUpShutUpInstance.getBetsForUser.call();
     }).then(function(response) {
       
       console.log("+++++")
