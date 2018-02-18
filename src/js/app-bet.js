@@ -86,12 +86,68 @@ App = {
 
   voteWinner: function(e) {
     e.preventDefault();
-    // make a call to smart contract
+    
+    var entityNumber = 0;
+    var betInstance;
+
+    if (e.data.winner == "bettor") {
+      entityNumber = 1;
+    } else if (e.data.winner == "taker") {
+      entityNumber = 2;
+    } else if (e.data.winner == "tie") {
+      entityNumber = 3;
+    }
+
+    App.contracts.Bet.deployed().then(function(instance) {
+      betInstance = instance;
+    
+      return betInstance.resolveBet(entityNumber);
+    }).then(function(response) {
+      
+      console.log("+++++")
+      console.log(response);
+      console.log("+++++");
+  
+    }).catch(function(err) {
+      console.log(err.message);
+    });
+
     console.log(e.data.winner + " received vote for winner");
   },
 
   fundBet: function(e) {
     e.preventDefault();
+    var betInstance;
+    var amount;
+    
+    var hashAddress = App.bet.description.getAddress();
+    var contractAddress = App.bet.betId;
+
+    if (e.data.funder == "bettor") {
+      amount = App.bet.instigatorBetAmount;
+    } else {
+      amount = App.bet.targetBetAmount;
+    }
+    amount = App.web3.toWei(amount);
+
+    App.contracts.Bet.deployed().then(function(instance) {
+      betInstance = instance;
+    
+      return betInstance.depositFunds({value: amount});
+    }).then(function(response) {
+      
+      console.log("+++++")
+      console.log(response);
+      console.log("+++++");
+  
+
+    }).catch(function(err) {
+      console.log(err.message);
+    });
+    
+
+
+
     // make a call to smart contract
     console.log(e.data.funder + " funded bet");
   },
@@ -145,10 +201,12 @@ App = {
     document.getElementById('bet-description').innerHTML = bet.descriptionText;
     document.getElementById('bettor-twitter').value = bet.instigatorHandle;
     document.getElementById('bettor-wallet').value = bet.instigatorAddress;
-    document.getElementById('bettor-amount').value = App.web3.fromWei(bet.instigatorBetAmount);
+    document.getElementById('bettor-amount').value = bet.instigatorBetAmount;
+    document.getElementById('bettor-paid').value = bet.betData.p1Paid;
     document.getElementById('taker-twitter').value = bet.targetHandle;
     document.getElementById('taker-wallet').value = bet.targetAddress;
-    document.getElementById('taker-amount').value = App.web3.fromWei(bet.targetBetAmount);
+    document.getElementById('taker-amount').value = bet.targetBetAmount;
+    document.getElementById('taker-paid').value = bet.betData.p2Paid;
 
     document.getElementById('metamask-id').innerHTML = "something";
 

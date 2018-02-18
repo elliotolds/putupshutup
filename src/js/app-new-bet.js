@@ -98,27 +98,9 @@ App = {
   },
 
   loadBet: function() {
-    let bet = new Bet(App.contracts, App.ipfs, App.dummyData());
+    let bet = new Bet(App.contracts, App.ipfs, App.getBetFormValues());
     return bet;
   },
-
-  dummyData: function() {
-    var betData = {
-      arbiterAddress: "0x627306090abaB3A6e1400e9345bC60c78a8BEf57",
-      arbiterFee: "0.01",
-      arbiterHandle: "@",
-      descriptionText: "Donec erat velit, ullamcorper vel libero sit amet, porta lobortis velit. Vestibulum varius eros at pulvinar consequat. Sed mi lorem, scelerisque nec odio sed, laoreet laoreet purus. Vestibulum laoreet consectetur arcu, vel vehicula odio pellentesque id. Fusce interdum, eros eu egestas sollicitudin, massa neque molestie lectus, non placerat est ante a urna.",
-      instigatorAddress: "0x627306090abaB3A6e1400e9345bC60c78a8BEf57",
-      instigatorBetAmount: "0.00",
-      instigatorHandle: "@",
-      takerHandle: "@",
-      targetAddress: "0x627306090abaB3A6e1400e9345bC60c78a8BEf57",
-      targetBetAmount: "0.00",
-      title: "Lorem ipsum dolor sit amet, consectetur adipiscing elit"
-    }
-
-    return betData;
-  }
 
 };
 
