@@ -73,6 +73,7 @@ class Bet {
         this.descriptionText = initial.descriptionText || ""
         this.instigatorHandle = initial.instigatorHandle || ""
         this.targetHandle = initial.targetHandle || ""
+        this.arbiterSigned = initial.arbiterSigned || ""
     }
 
     create() {

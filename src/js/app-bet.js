@@ -66,7 +66,11 @@ App = {
     } else if (App.currentAccount == App.bet.targetAddress.toLowerCase()) {
       $('#taker-funds-btn').removeClass('hidden');
     } else if (App.currentAccount == App.bet.arbiterAddress.toLowerCase()) {
-      $('#arbiter-agree-prompt').removeClass('hidden');
+      if (App.bet.arbiterSigned) {
+        $('#arbiter-agree-confirmation').removeClass('hidden');
+      } else {
+        $('#arbiter-agree-prompt').removeClass('hidden');
+      }
     }
   },
 
@@ -113,7 +117,8 @@ App = {
   dummyData: function() {
     var betData = {};
     betData.arbiterAddress = "0x089E216791A8cD9A9f281D95346CBF5B25059E0D"
-    betData.arbiterFee = "0.0005"
+    betData.arbiterFee = "0.0005",
+    betData.arbiterSigned = false,
     betData.arbiterHandle = "@impartial_judge"
     betData.descriptionText = "Donec erat velit, ullamcorper vel libero sit amet, porta lobortis velit. Vestibulum varius eros at pulvinar consequat. Sed mi lorem, scelerisque nec odio sed, laoreet laoreet purus. Vestibulum laoreet consectetur arcu, vel vehicula odio pellentesque id. Fusce interdum, eros eu egestas sollicitudin, massa neque molestie lectus, non placerat est ante a urna."
     betData.instigatorAddress = "0x627306090abaB3A6e1400e9345bC60c78a8BEf57"
