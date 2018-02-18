@@ -44,6 +44,8 @@ class Bet {
         if (contracts == null || ipfs == null) {
             throw "invalid params"
         }
+        this.contracts = contracts
+        this.ipfs = ipfs
 
         this.loadedFromContract = false
 
@@ -75,8 +77,29 @@ class Bet {
     create() {
         //validate
         //ipfs description
-        let ipft_addr = this.description.getAddress()
+        let ipft_addr = "hashhashhash"// this.description.getAddress()
         //web3 create contract
+
+        var betInstance
+        this.contracts.PutUpOrShutUp.deployed().then(instance => {
+            betInstance = instance;
+          
+            return betInstance.startNewBet(this.instigatorAddress, this.instigatorBetAmount, this.targetAddress, this.targetBetAmount, this.arbiterAddress, this.arbiterFee, ipft_addr);
+          }).then(function(response) {
+            
+            console.log("-----")
+            console.log(response);
+            console.log("-----")
+          }).then(function(){
+              return betInstance.getBet(ipft_addr)
+          }).then(function(response){
+            console.log("-----")
+            console.log(response);
+            console.log("-----")              
+          }).catch(function(err) {
+            console.log(err.message);
+          });
+      
         //this.betId = 
     }
 
