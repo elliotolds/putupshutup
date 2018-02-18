@@ -55,11 +55,9 @@
                         <div class="col-md-12 mr-md-auto">
                             <div class="border-secondary">
                                 <div class="card-header">
-                                    <h3 class="mb-0 my-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit</h3>
+                                    <h3 class="mb-0 my-2" id="bet-title"></h3>
                                 </div>
-                                <div class="card-body">
-                                    Donec erat velit, ullamcorper vel libero sit amet, porta lobortis velit. Vestibulum varius eros at pulvinar consequat. Sed mi lorem, scelerisque nec odio sed, laoreet laoreet purus. Vestibulum laoreet consectetur arcu, vel vehicula odio pellentesque id. Fusce interdum, eros eu egestas sollicitudin, massa neque molestie lectus, non placerat est ante a urna.
-                                </div>
+                                <div class="card-body" id="bet-description"></div>
                             </div>
                         </div>
                         <!-- /form user info -->
@@ -79,21 +77,21 @@
                                             <label for="bettor-twitter" class="mb-0">Twitter</label>
                                             <div class="row mb-1">
                                                 <div class="col-lg-12">
-                                                    <input type="text" name="bettor-twitter" id="bettor-twitter" class="form-control" value="@bettor" required readonly>
+                                                    <input type="text" name="bettor-twitter" id="bettor-twitter" class="form-control" value="" required readonly>
                                                 </div>
                                             </div>
 
                                             <label for="bettor-wallet" class="mb-0">Public Eth Wallet</label>
                                             <div class="row mb-1">
                                                 <div class="col-lg-12">
-                                                    <input type="text" name="bettor-wallet" id="bettor-wallet" class="form-control" value="0x627306090abaB3A6e1400e9345bC60c78a8BEf57" required readonly>
+                                                    <input type="text" name="bettor-wallet" id="bettor-wallet" class="form-control" value="" required readonly>
                                                 </div>
                                             </div>
                                             
                                             <label for="bettor-amount" class="mb-0">Bet Amount in Eth</label>
                                             <div class="row mb-1">
                                                 <div class="col-lg-12">
-                                                    <input type="number" name="bettor-amount" id="bettor-amount" class="form-control" value="1.00" required readonly>
+                                                    <input type="number" name="bettor-amount" id="bettor-amount" class="form-control" value="" required readonly>
                                                 </div>
                                             </div>
                                         </fieldset>
@@ -122,24 +120,24 @@
                                 <div class="card-body">
                                     <form class="form" role="form" autocomplete="off">
                                         <fieldset>
-                                            <label for="bettor-twitter" class="mb-0">Twitter</label>
+                                            <label for="taker-twitter" class="mb-0">Twitter</label>
                                             <div class="row mb-1">
                                                 <div class="col-lg-12">
-                                                    <input type="text" name="bettor-twitter" id="bettor-twitter" class="form-control" value="@taker" required readonly>
+                                                    <input type="text" name="taker-twitter" id="taker-twitter" class="form-control" value="" required readonly>
                                                 </div>
                                             </div>
 
-                                            <label for="bettor-wallet" class="mb-0">Public Eth Wallet</label>
+                                            <label for="taker-wallet" class="mb-0">Public Eth Wallet</label>
                                             <div class="row mb-1">
                                                 <div class="col-lg-12">
-                                                    <input type="text" name="bettor-wallet" id="bettor-wallet" class="form-control" value="0x627306090abaB3A6e1400e9345bC60c78a8BEf57" required readonly>
+                                                    <input type="text" name="taker-wallet" id="taker-wallet" class="form-control" value="" required readonly>
                                                 </div>
                                             </div>
                                             
-                                            <label for="bettor-amount" class="mb-0">Bet Amount in Eth</label>
+                                            <label for="taker-amount" class="mb-0">Bet Amount in Eth</label>
                                             <div class="row mb-1">
                                                 <div class="col-lg-12">
-                                                    <input type="number" name="bettor-amount" id="bettor-amount" class="form-control" value="1.00" required readonly>
+                                                    <input type="number" name="taker-amount" id="taker-amount" class="form-control" value="" required readonly>
                                                 </div>
                                             </div>
                                         </fieldset>
@@ -173,6 +171,10 @@
                     </div>
                 </div>
                 <!-- /card -->
+
+                <div>metamask id: <span id="metamask-id"></span>
+                </div>
+
             </div>
         </div>
     </div>
@@ -192,5 +194,10 @@
 
 <script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
+<script src="js/web3.min.js"></script>
+<script src="js/truffle-contract.js"></script>
+<script src="js/ipfs-mini.min.js"></script>
+<script src="js/bet.js"></script>
+<script src="js/app-bet.js"></script>
 </body>
 </html>

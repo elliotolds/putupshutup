@@ -66,6 +66,10 @@ class Bet {
         this.targetBetAmount = initial.targetBetAmount || 0
         this.arbiterAddress = initial.arbiterAddress || ""
         this.arbiterFee = initial.arbiterFee || 0
+
+        this.descriptionText = initial.descriptionText || ""
+        this.instigatorHandle = initial.instigatorHandle || ""
+        this.targetHandle = initial.targetHandle || ""
     }
 
     create() {
