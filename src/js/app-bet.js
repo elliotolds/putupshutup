@@ -39,20 +39,19 @@ App = {
     
       // Set the provider for our contract
       App.contracts.Bet.setProvider(App.web3Provider);
-    });
 
-    $.getJSON('PutUpOrShutUp.json', function(data) {
+      $.getJSON('PutUpOrShutUp.json', function(data) {
 
-      // Get the necessary contract artifact file and instantiate it with truffle-contract
-      var PutUpOrShutUpArtifact = data;
-      App.contracts.PutUpOrShutUp = TruffleContract(PutUpOrShutUpArtifact);
-    
-      // Set the provider for our contract
-      App.contracts.PutUpOrShutUp.setProvider(App.web3Provider);
+        // Get the necessary contract artifact file and instantiate it with truffle-contract
+        var PutUpOrShutUpArtifact = data;
+        App.contracts.PutUpOrShutUp = TruffleContract(PutUpOrShutUpArtifact);
+      
+        // Set the provider for our contract
+        App.contracts.PutUpOrShutUp.setProvider(App.web3Provider);
+        return App.bindEvents();
+      });
+    });   
 
-    });
-
-    return App.bindEvents();
   },
 
   getCurrentAccount: function() {
@@ -66,7 +65,11 @@ App = {
     } else if (App.currentAccount == App.bet.targetAddress.toLowerCase()) {
       $('#taker-funds-btn').removeClass('hidden');
     } else if (App.currentAccount == App.bet.arbiterAddress.toLowerCase()) {
-      $('#arbiter-agree-prompt').removeClass('hidden');
+      if (App.bet.arbiterSigned) {
+        $('#arbiter-agree-confirmation').removeClass('hidden');
+      } else {
+        $('#arbiter-agree-prompt').removeClass('hidden');
+      }
     }
   },
 
@@ -77,7 +80,8 @@ App = {
     $('#taker-wins-btn').click({winner: "taker"}, App.voteWinner);
     $('#taker-funds-btn').click({funder: "taker"}, App.fundBet);
     $('#tie-btn').click({winner: "tie"}, App.voteWinner);
-    $('#affirm-arbitrate-btn').click(App.agreeArbitrate);
+
+    return App.loadBet();
   },
 
   voteWinner: function(e) {
@@ -99,21 +103,30 @@ App = {
   },
 
   loadBet: function() {
-    let bet = new Bet(App.contracts, App.ipfs, App.dummyData());
-    console.log("loaded bet: ", bet);
-    
-    App.bet = bet;
-    App.updateBetUI(bet);
+    let bet = new Bet(App.contracts, App.ipfs);
 
-    App.getCurrentAccount();
+    var url_string = window.location.href
+    var url = new URL(url_string);
+    var ipfs_hash = url.searchParams.get("id");
+    console.log(ipfs_hash);    
 
-    return bet;
+    return bet.load(ipfs_hash).then(x=> {
+
+      console.log("loaded bet: ", bet);
+      
+      App.bet = bet;
+      App.updateBetUI(bet);
+  
+      App.getCurrentAccount();
+
+    })
   },
 
   dummyData: function() {
     var betData = {};
     betData.arbiterAddress = "0x089E216791A8cD9A9f281D95346CBF5B25059E0D"
-    betData.arbiterFee = "0.0005"
+    betData.arbiterFee = "0.0005",
+    betData.arbiterSigned = false,
     betData.arbiterHandle = "@impartial_judge"
     betData.descriptionText = "Donec erat velit, ullamcorper vel libero sit amet, porta lobortis velit. Vestibulum varius eros at pulvinar consequat. Sed mi lorem, scelerisque nec odio sed, laoreet laoreet purus. Vestibulum laoreet consectetur arcu, vel vehicula odio pellentesque id. Fusce interdum, eros eu egestas sollicitudin, massa neque molestie lectus, non placerat est ante a urna."
     betData.instigatorAddress = "0x627306090abaB3A6e1400e9345bC60c78a8BEf57"
@@ -148,6 +161,5 @@ App = {
 $(function() {
   $(window).load(function() {
     App.init();
-    App.loadBet();
   });
 });
