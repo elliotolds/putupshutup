@@ -97,7 +97,7 @@
                                     
                                     <div class="form-group row">
                                         <div class="col-md-6">
-                                            <button class="btn btn-success btn-lg btn-block" id="bettor-wins-btn">Bettor Wins</button>
+                                            <button class="btn btn-success btn-lg btn-block voting-option hidden" id="bettor-wins-btn">Bettor Wins</button>
                                         </div>
 
                                         <div class="col-md-6">
@@ -141,7 +141,7 @@
                                     
                                     <div class="form-group row">
                                         <div class="col-md-6">
-                                            <button class="btn btn-success btn-lg btn-block" id="taker-wins-btn">Taker Wins</button>
+                                            <button class="btn btn-success btn-lg btn-block voting-option hidden" id="taker-wins-btn">Taker Wins</button>
                                         </div>
 
                                         <div class="col-md-6">
@@ -152,11 +152,10 @@
                             </div>
                         </div>
                         <!-- /taker -->
-
                     </div>
-                    <div class="card-body">
+
+                    <div class="card-body voting-option hidden">
                         <div class="form-group row">
-                            
                             <div class="col-md-5"></div>
                             <div class="col-md-2 text-center text-normal">
                                 <div>~ or ~</div>
@@ -164,6 +163,23 @@
                                 <button class="btn btn-outline-secondary btn-lg btn-block" id="tie-btn">Tie</button>
                             </div>
                         </div>
+                    </div>
+
+                    <div class="row hidden" id="arbiter-agree-prompt">
+
+                        <div class="col-md-3"></div>
+                        <!-- arbiter -->
+                        <div class="col-md-6 mr-md-auto">
+                            <div class="border-secondary">
+                                <div class="card-header">
+                                    <h3 class="mb-0 my-2">Do you agree to arbitrate?</h3>
+                                </div>
+                                <div class="card-body">
+                                    <button class="btn btn-outline-secondary btn-lg btn-block" id="affirm-arbitrate-btn">I Agree</button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /arbiter -->
                     </div>
                 </form>
                 <!-- /card -->
