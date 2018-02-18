@@ -25,7 +25,7 @@ App = {
       // If no injected web3 instance is detected, fall back to Ganache
       App.web3Provider = new Web3.providers.HttpProvider('http://localhost:7545');
     }
-    web3 = new Web3(App.web3Provider);
+    App.web3 = new Web3(App.web3Provider);
 
     return App.initContract();
   },
@@ -39,43 +39,41 @@ App = {
     
       // Set the provider for our contract
       App.contracts.Bet.setProvider(App.web3Provider);
+    });
+
+    $.getJSON('PutUpOrShutUp.json', function(data) {
+
+      // Get the necessary contract artifact file and instantiate it with truffle-contract
+      var PutUpOrShutUpArtifact = data;
+      App.contracts.PutUpOrShutUp = TruffleContract(PutUpOrShutUpArtifact);
     
-      // Use our contract to retrieve and mark the adopted pets
-      return App.loadBets();
+      // Set the provider for our contract
+      App.contracts.PutUpOrShutUp.setProvider(App.web3Provider);
+
     });
 
     return App.bindEvents();
   },
 
-  loadBets: function() {
-    console.log("Hello world!"); 
-  },
-
   bindEvents: function() {
-    $('#create-bet-btn').click(App.betButton)
+    $('#create-bet-btn').click(App.betButton);
+    $('#bettor-wins-btn').click({winner: "bettor"}, App.voteWinner);
+    $('#bettor-funds-btn').click({funder: "bettor"}, App.fundBet);
+    $('#taker-wins-btn').click({winner: "taker"}, App.voteWinner);
+    $('#taker-funds-btn').click({funder: "taker"}, App.fundBet);
+    $('#tie-btn').click({winner: "tie"}, App.voteWinner);
   },
 
-  betButton: function() {
-    let a = new Bet(App.contracts, App.ipfs, App.getBetFormValues());
-    debugger;
-    a.getFundingStatus()
+  voteWinner: function(e) {
+    e.preventDefault();
+    // make a call to smart contract
+    console.log(e.data.winner + " received vote for winner");
   },
 
-  getBetFormValues: function() {
-    var newBetProperties = {};
-    newBetProperties.title = document.getElementById('bet-title').value;
-    newBetProperties.descriptionText = document.getElementById('bet-language').value;
-    newBetProperties.instigatorHandle = document.getElementById('bettor-twitter').value;
-    newBetProperties.instigatorAddress = document.getElementById('bettor-wallet').value;
-    newBetProperties.instigatorBetAmount = document.getElementById('bettor-amount').value;
-    newBetProperties.takerHandle = document.getElementById('taker-twitter').value;
-    newBetProperties.targetAddress = document.getElementById('taker-wallet').value;
-    newBetProperties.targetBetAmount = document.getElementById('taker-amount').value;
-    newBetProperties.arbiterHandle = document.getElementById('arbiter-twitter').value;
-    newBetProperties.arbiterAddress = document.getElementById('arbiter-wallet').value;
-    newBetProperties.arbiterFee = document.getElementById('arbiter-amount').value;
-
-    return newBetProperties;
+  fundBet: function(e) {
+    e.preventDefault();
+    // make a call to smart contract
+    console.log(e.data.funder + " funded bet");
   },
 
   loadBet: function() {
@@ -109,10 +107,10 @@ App = {
     document.getElementById('bet-description').innerHTML = bet.descriptionText;
     document.getElementById('bettor-twitter').value = bet.instigatorHandle;
     document.getElementById('bettor-wallet').value = bet.instigatorAddress;
-    document.getElementById('bettor-amount').value = bet.instigatorBetAmount;
+    document.getElementById('bettor-amount').value = App.web3.fromWei(bet.instigatorBetAmount);
     document.getElementById('taker-twitter').value = bet.targetHandle;
     document.getElementById('taker-wallet').value = bet.targetAddress;
-    document.getElementById('taker-amount').value = bet.targetBetAmount;
+    document.getElementById('taker-amount').value = App.web3.fromWei(bet.targetBetAmount);
 
     document.getElementById('metamask-id').innerHTML = "something";
 
