@@ -340,7 +340,7 @@ App = {
 
   },
 
-  /*
+  
   disperseAllFunds: function() {
     console.log("disperseAllFunds");  
 
@@ -362,7 +362,7 @@ App = {
     });
 
   },
-  */
+  
 
   testBet: function() {
     console.log("testBet");  
