@@ -58,7 +58,12 @@ App = {
 
   betButton: function() {
     let a = new Bet(App.contracts, App.ipfs, App.getBetFormValues());
-    a.getFundingStatus()
+    // a.getFundingStatus()
+    if(!a.create()) {
+      //something 
+    }
+    console.log(a)
+  
   },
 
   getBetFormValues: function() {
