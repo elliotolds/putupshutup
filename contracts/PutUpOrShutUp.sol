@@ -14,7 +14,7 @@ contract PutUpOrShutUp {
     uint _arbReward,
     bytes32 _hashOfBet) public returns (bool)
   {
-
+    
     Bet b = new Bet(
       _p1Address,
       _p1AmountOwed,
@@ -90,6 +90,9 @@ contract Bet {
     uint _arbReward,
     bytes32 _hashOfBet
   ) {
+
+    require(_p1Owed > arbReward && _p2Owed > arbReward);
+
     p1Address = _p1Address;
     p1AmountOwed = _p1Owed;
     p2Address = _p2Address;
@@ -122,7 +125,7 @@ contract Bet {
   }
 
   function resolveBet( Resolution _res) public {
-    require(officialResolution == Resolution.None);
+    require(betLockedIn && officialResolution == Resolution.None);
 
     bool senderIsArbiter = false;
 
@@ -164,12 +167,8 @@ contract Bet {
     require(officialResolution != Resolution.None);
 
     // First ensure arbiter is paid
-    if (this.balance <= arbReward) {
-      arbAddress.transfer(this.balance);
-      return;
-    } else {
-      arbAddress.transfer(arbReward);
-    }
+    assert (this.balance >= arbReward); // Both parties each transferred enough for the full arbiter reward
+    arbAddress.transfer(arbReward);
     
     // if there was a winner, disperse the rest of the funds to them
     if (officialResolution == Resolution.P1Wins) {
@@ -184,8 +183,11 @@ contract Bet {
         p1Address.transfer(this.balance/2); 
         p2Address.transfer(this.balance);
       } else {
-        // Return the fraction of the remaining funds to p1 corresponding to the fraction of the total they paid
-        p1Address.transfer((this.balance * uint256(p1AmountOwed)) / (p1AmountOwed + p2AmountOwed));
+        // Return the fraction of the remaining funds to p1 corresponding to the fraction of the total they bet.
+        // We need to subtrat the arbiter award because it isn't part of the bet and skews the bet ratio.
+        uint p1BetAmount = p1AmountOwed - arbReward;
+        uint p2BetAmount = p2AmountOwed - arbReward;
+        p1Address.transfer((this.balance * uint256(p1BetAmount)) / (p1BetAmount + p2BetAmount));
         p2Address.transfer(this.balance);
       }
     }

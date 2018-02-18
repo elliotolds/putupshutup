@@ -49,7 +49,7 @@
                 <h2 class="text-center">New Bet</h2>
                 <hr class="accent mb-3">
                 
-                <div class="card">
+                <form class="card form" role="form" autocomplete="off">
                     <div class="row">
                         <!-- form user info -->
                         <div class="col-md-12 mr-md-auto">
@@ -58,22 +58,21 @@
                                     <h3 class="mb-0 my-2">Bet</h3>
                                 </div>
                                 <div class="card-body">
-                                    <form class="form" role="form" autocomplete="off">
-                                        <fieldset>
-                                            <label for="bet-title" class="mb-0">Title</label>
-                                            <div class="row mb-1">
-                                                <div class="col-lg-12">
-                                                    <input type="text" name="bet-title" id="bet-title" class="form-control" value="" required>
-                                                </div>
+                                    <fieldset>
+                                        <label for="bet-title" class="mb-0">Title</label>
+                                        <div class="row mb-1">
+                                            <div class="col-lg-12">
+                                                <input type="text" name="bet-title" id="bet-title" class="form-control" value="Lorem ipsum dolor sit amet, consectetur adipiscing elit" required>
                                             </div>
-                                            <label for="bet-language" class="mb-0">Language</label>
-                                            <div class="row mb-1">
-                                                <div class="col-lg-12">
-                                                    <textarea rows="6" name="message2" id="message2" class="form-control" required></textarea>
-                                                </div>
+                                        </div>
+                                        <label for="bet-bet-language" class="mb-0">Language</label>
+                                        <div class="row mb-1">
+                                            <div class="col-lg-12">
+                                                <textarea rows="6" name="bet-language" id="bet-language" class="form-control" required>Donec erat velit, ullamcorper vel libero sit amet, porta lobortis velit. Vestibulum varius eros at pulvinar consequat. Sed mi lorem, scelerisque nec odio sed, laoreet laoreet purus. Vestibulum laoreet consectetur arcu, vel vehicula odio pellentesque id. Fusce interdum, eros eu egestas sollicitudin, massa neque molestie lectus, non placerat est ante a urna.
+                                                </textarea>
                                             </div>
-                                        </fieldset>
-                                    </form>
+                                        </div>
+                                    </fieldset>
                                 </div>
                             </div>
                         </div>
@@ -89,30 +88,28 @@
                                     <h3 class="mb-0 my-2">Bettor</h3>
                                 </div>
                                 <div class="card-body">
-                                    <form class="form" role="form" autocomplete="off">
-                                        <fieldset>
-                                            <label for="bettor-twitter" class="mb-0">Twitter</label>
-                                            <div class="row mb-1">
-                                                <div class="col-lg-12">
-                                                    <input type="text" name="bettor-twitter" id="bettor-twitter" class="form-control" value="@" required>
-                                                </div>
+                                    <fieldset>
+                                        <label for="bettor-twitter" class="mb-0">Twitter</label>
+                                        <div class="row mb-1">
+                                            <div class="col-lg-12">
+                                                <input type="text" name="bettor-twitter" id="bettor-twitter" class="form-control" value="@" required>
                                             </div>
+                                        </div>
 
-                                            <label for="bettor-wallet" class="mb-0">Public Eth Wallet</label>
-                                            <div class="row mb-1">
-                                                <div class="col-lg-12">
-                                                    <input type="text" name="bettor-wallet" id="bettor-wallet" class="form-control" value="0x627306090abaB3A6e1400e9345bC60c78a8BEf57" required>
-                                                </div>
+                                        <label for="bettor-wallet" class="mb-0">Public Eth Wallet</label>
+                                        <div class="row mb-1">
+                                            <div class="col-lg-12">
+                                                <input type="text" name="bettor-wallet" id="bettor-wallet" class="form-control" value="0x627306090abaB3A6e1400e9345bC60c78a8BEf57" required>
                                             </div>
-                                            
-                                            <label for="bettor-amount" class="mb-0">Bet Amount in Eth</label>
-                                            <div class="row mb-1">
-                                                <div class="col-lg-12">
-                                                    <input type="number" name="bettor-amount" id="bettor-amount" class="form-control" value="0.00" required>
-                                                </div>
+                                        </div>
+                                        
+                                        <label for="bettor-amount" class="mb-0">Bet Amount in Eth</label>
+                                        <div class="row mb-1">
+                                            <div class="col-lg-12">
+                                                <input type="number" name="bettor-amount" id="bettor-amount" class="form-control" value="0.00" required>
                                             </div>
-                                        </fieldset>
-                                    </form>
+                                        </div>
+                                    </fieldset>
                                 </div>
                             </div>
                         </div>
@@ -127,30 +124,28 @@
                                     <h3 class="mb-0 my-2">Taker</h3>
                                 </div>
                                 <div class="card-body">
-                                    <form class="form" role="form" autocomplete="off">
-                                        <fieldset>
-                                            <label for="bettor-twitter" class="mb-0">Twitter</label>
-                                            <div class="row mb-1">
-                                                <div class="col-lg-12">
-                                                    <input type="text" name="bettor-twitter" id="bettor-twitter" class="form-control" value="@" required>
-                                                </div>
+                                    <fieldset>
+                                        <label for="taker-twitter" class="mb-0">Twitter</label>
+                                        <div class="row mb-1">
+                                            <div class="col-lg-12">
+                                                <input type="text" name="taker-twitter" id="taker-twitter" class="form-control" value="@" required>
                                             </div>
+                                        </div>
 
-                                            <label for="bettor-wallet" class="mb-0">Public Eth Wallet</label>
-                                            <div class="row mb-1">
+                                        <label for="taker-wallet" class="mb-0">Public Eth Wallet</label>
+                                        <div class="row mb-1">
+                                            <div class="col-lg-12">
+                                                <input type="text" name="taker-wallet" id="taker-wallet" class="form-control" value="0x627306090abaB3A6e1400e9345bC60c78a8BEf57" required>
+                                            </div>
+                                        </div>
+                                        
+                                        <label for="taker-amount" class="mb-0">Bet Amount in Eth</label>
+                                        <div class="row mb-1">
                                                 <div class="col-lg-12">
-                                                    <input type="text" name="bettor-wallet" id="bettor-wallet" class="form-control" value="0x627306090abaB3A6e1400e9345bC60c78a8BEf57" required>
-                                                </div>
+                                                <input type="number" name="taker-amount" id="taker-amount" class="form-control" value="0.00" required>
                                             </div>
-                                            
-                                            <label for="bettor-amount" class="mb-0">Bet Amount in Eth</label>
-                                            <div class="row mb-1">
-                                                    <div class="col-lg-12">
-                                                    <input type="number" name="bettor-amount" id="bettor-amount" class="form-control" value="0.00" required>
-                                                </div>
-                                            </div>
-                                        </fieldset>
-                                    </form>
+                                        </div>
+                                    </fieldset>
                                 </div>
                             </div>
                         </div>
@@ -162,41 +157,39 @@
 
                     <div class="row">
                         <div class="col-md-3"></div>
-                        <!-- arbitor -->
+                        <!-- arbiter -->
                         <div class="col-md-6 mr-md-auto">
                             <div class="border-secondary">
                                 <div class="card-header">
                                     <h3 class="mb-0 my-2">In case the bet needs Arbitration</h3>
                                 </div>
                                 <div class="card-body">
-                                    <form class="form" role="form" autocomplete="off">
-                                        <fieldset>
-                                            <label for="arbitor-twitter" class="mb-0">Arbitrator Twitter</label>
-                                            <div class="row mb-1">
-                                                <div class="col-lg-12">
-                                                    <input type="text" name="arbitor-twitter" id="arbitor-twitter" class="form-control" value="@" required>
-                                                </div>
+                                    <fieldset>
+                                        <label for="arbiter-twitter" class="mb-0">Arbitrator Twitter</label>
+                                        <div class="row mb-1">
+                                            <div class="col-lg-12">
+                                                <input type="text" name="arbiter-twitter" id="arbiter-twitter" class="form-control" value="@" required>
                                             </div>
+                                        </div>
 
-                                            <label for="arbitor-wallet" class="mb-0">Arbitrator Public Eth Wallet</label>
-                                            <div class="row mb-1">
-                                                <div class="col-lg-12">
-                                                    <input type="text" name="arbitor-wallet" id="arbitor-wallet" class="form-control" value="0x627306090abaB3A6e1400e9345bC60c78a8BEf57" required>
-                                                </div>
+                                        <label for="arbiter-wallet" class="mb-0">Arbitrator Public Eth Wallet</label>
+                                        <div class="row mb-1">
+                                            <div class="col-lg-12">
+                                                <input type="text" name="arbiter-wallet" id="arbiter-wallet" class="form-control" value="0x627306090abaB3A6e1400e9345bC60c78a8BEf57" required>
                                             </div>
-                                            
-                                            <label for="arbitor-amount" class="mb-0">Arbitrator Reward for arbitrating</label>
-                                            <div class="row mb-1">
-                                                <div class="col-lg-12">
-                                                    <input type="number" name="arbitor-amount" id="arbitor-amount" class="form-control" value="0.01" required>
-                                                </div>
+                                        </div>
+                                        
+                                        <label for="arbiter-amount" class="mb-0">Arbitrator Reward for arbitrating</label>
+                                        <div class="row mb-1">
+                                            <div class="col-lg-12">
+                                                <input type="number" name="arbiter-amount" id="arbiter-amount" class="form-control" value="0.01" required>
                                             </div>
-                                        </fieldset>
-                                    </form>
+                                        </div>
+                                    </fieldset>
                                 </div>
                             </div>
                         </div>
-                        <!-- /arbitor -->
+                        <!-- /arbiter -->
                     </div>
 
                     <div class="card-body">
@@ -214,7 +207,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </form>
                 <!-- /card -->
             </div>
         </div>
@@ -233,8 +226,8 @@
 </footer>
 
 
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+<script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/web3.min.js"></script>
 <script src="js/truffle-contract.js"></script>

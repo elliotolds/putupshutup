@@ -47,7 +47,7 @@ class Bet {
 
         this.betId = initial.betId || ""
         if(this.betId != "") {
-            //this.load() //now or later
+            // this.load() //now or later
         }
 
         this.description = new BetDescription(this.ipfs)
