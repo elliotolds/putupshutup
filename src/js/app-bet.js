@@ -39,35 +39,41 @@ App = {
     
       // Set the provider for our contract
       App.contracts.Bet.setProvider(App.web3Provider);
+    });
+
+    $.getJSON('PutUpOrShutUp.json', function(data) {
+
+      // Get the necessary contract artifact file and instantiate it with truffle-contract
+      var PutUpOrShutUpArtifact = data;
+      App.contracts.PutUpOrShutUp = TruffleContract(PutUpOrShutUpArtifact);
     
-      // Use our contract to retrieve and mark the adopted pets
-      return App.loadBets();
+      // Set the provider for our contract
+      App.contracts.PutUpOrShutUp.setProvider(App.web3Provider);
+
     });
 
     return App.bindEvents();
   },
 
-  loadBets: function() {
-    console.log("Hello world!"); 
-  },
-
   bindEvents: function() {
     $('#create-bet-btn').click(App.betButton);
-    $('#bettor-wins-btn').click(App.voteWinner, "bettor");
-    $('#bettor-funds-btn').click(App.fundBet, "bettor");
-    $('#taker-wins-btn').click(App.voteWinner, "taker");
-    $('#taker-funds-btn').click(App.fundBet, "bettor");
-    $('#tie-btn').click(App.voteWinner, "tie");
+    $('#bettor-wins-btn').click({winner: "bettor"}, App.voteWinner);
+    $('#bettor-funds-btn').click({funder: "bettor"}, App.fundBet);
+    $('#taker-wins-btn').click({winner: "taker"}, App.voteWinner);
+    $('#taker-funds-btn').click({funder: "taker"}, App.fundBet);
+    $('#tie-btn').click({winner: "tie"}, App.voteWinner);
   },
 
-  voteWinner: function(e, winner) {
+  voteWinner: function(e) {
     e.preventDefault();
     // make a call to smart contract
+    console.log(e.data.winner + " received vote for winner");
   },
 
-  fundBet: function(e, funder) {
+  fundBet: function(e) {
     e.preventDefault();
     // make a call to smart contract
+    console.log(e.data.funder + " funded bet");
   },
 
   loadBet: function() {
