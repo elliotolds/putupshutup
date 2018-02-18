@@ -25,7 +25,7 @@ class BetDescription {
             //save to ipfs
             //this.ipfsAddress = 
         }
-        this.ipfsAddress = "hashhashhash"//TEST
+        this.ipfsAddress = "hashhashhash3"//TEST
         return this.ipfsAddress
     }
 
@@ -93,14 +93,64 @@ class Bet {
           });
     }
 
-    load(betId) {
-        if(betId) { //optional
-            this.betId = betId
+    async load(ipfs_hash) {
+        if(ipfs_hash && ipfs_hash != "") { //optional
+            this.description.setAddress(ipfs_hash)
+        } else {
+            ipfs_hash = this.description.getAddress()
+        }
+
+        if(ipfs_hash == "") {
+            throw "need a hash"
         }
 
         //load contract info from web3
-        this.loadedFromContract = true
-    }
+        try {
+            let pusu = await this.contracts.PutUpOrShutUp.deployed()
+            let bet_response = await pusu.getBet.call(ipfs_hash)
+            let bet_address = this.contracts.Bet.at(bet_response).address
+            console.log(bet_address)
+            let bet_instance = this.contracts.Bet.at(bet_address)
+            let bet_info = await bet_instance.getBetInfo()
+            let bet_resolution_info = await bet_instance.getBetResolutionInfo()
+
+            let betData = {}
+            //info
+            betData.p1Address = bet_info[0]
+            betData.p1Owes = web3.fromWei(bet_info[1].toNumber(), "ether")
+            betData.p1Paid = web3.fromWei(bet_info[2].toNumber(), "ether")
+            betData.p2Address = bet_info[3]
+            betData.p2Owes = web3.fromWei(bet_info[4].toNumber(), "ether")
+            betData.p2Paid = web3.fromWei(bet_info[5].toNumber(), "ether")
+            betData.arbAddress = bet_info[6]
+            betData.arbReward = web3.fromWei(bet_info[7].toNumber(), "ether")
+            betData.betLockedIn = bet_info[8]
+            betData.arbitorAgreed = bet_info[9]
+            betData.arbiterDidWork = bet_info[10]
+
+            //resolution info
+            betData.p1Resolution = bet_resolution_info[0].toNumber()
+            betData.p2Resolution = bet_resolution_info[1].toNumber()
+            betData.arbiterResolution = bet_resolution_info[2].toNumber()
+            betData.officialResolution = bet_resolution_info[3].toNumber()
+
+            console.log(betData)
+
+            this.instigatorAddress = betData.p1Address
+            this.targetAddress = betData.p2Address
+            this.instigatorBetAmount = betData.p1Owes
+            this.targetBetAmount = betData.p2Owes
+            this.arbiterAddress = betData.arbAddress
+            this.arbiterFee = betData.arbReward
+
+            this.betData = betData
+            this.loadedFromContract = true
+        } catch(e) {
+            console.log(e.message)
+        }
+
+        return this
+}
 
     resolve(resolution) {
         //'instigator', 'target', 'draw'
