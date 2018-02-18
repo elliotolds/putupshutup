@@ -158,8 +158,10 @@ contract Bet {
 
     if (msg.sender == p1Address) {
       p1Address.transfer(p1AmountPaid);
+      p1AmountPaid = 0;
     } else if (msg.sender == p2Address) {
       p2Address.transfer(p2AmountPaid);
+      p2AmountPaid = 0;
     }
   }
 
