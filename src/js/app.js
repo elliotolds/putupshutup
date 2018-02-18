@@ -325,6 +325,20 @@ App = {
       
       console.log("getBetInfo");
       console.log(response);
+
+      var p1Address = response[0];
+      var p1Owes = response[1];
+      var p1Paid = response[2];
+      var p2Address = response[3];
+      var p2Owes = response[4];
+      var p2Paid = response[5];
+      var arbAddress = response[6];
+      var arbReward = response[7];
+      var boola = response[8];
+      var bool = response[9];
+      var bool = response[10];
+      
+
       return betInstance.getBetResolutionInfo();
       
     }).then(function(response) {
