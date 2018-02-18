@@ -161,6 +161,82 @@ App = {
 
   },
 
+
+  depositMoney: function() {
+    console.log("depositMoney");  
+
+    var betInstance;
+
+
+    App.contracts.Bet.deployed().then(function(instance) {
+      betInstance = instance;
+    
+      return betInstance.depositFunds({value: 1000000000000000000});
+    }).then(function(response) {
+      
+      console.log("+++++")
+      console.log(response);
+      console.log("+++++");
+  
+
+    }).catch(function(err) {
+      console.log(err.message);
+    });
+
+  },
+
+  whoAmI: function() {
+    console.log("whoAmI");  
+    console.log(web3.eth.defaultAccount);
+
+  },
+
+  agreeToArbitrate: function() {
+    console.log("agreeToArbitrate");  
+
+    var betInstance;
+
+
+    App.contracts.Bet.deployed().then(function(instance) {
+      betInstance = instance;
+    
+      return betInstance.agreeToArbitrate();
+    }).then(function(response) {
+      
+      console.log("+++++")
+      console.log(response);
+      console.log("+++++");
+  
+    }).catch(function(err) {
+      console.log(err.message);
+    });
+
+  },
+
+  /*
+  resolveBet: function() {
+    console.log("resolveBet");  
+
+    var betInstance;
+
+
+    App.contracts.Bet.deployed().then(function(instance) {
+      betInstance = instance;
+    
+      return betInstance.resolveBet(1);
+    }).then(function(response) {
+      
+      console.log("+++++")
+      console.log(response);
+      console.log("+++++");
+  
+    }).catch(function(err) {
+      console.log(err.message);
+    });
+
+  },
+  */
+
   testBet: function() {
     console.log("testBet");  
 
