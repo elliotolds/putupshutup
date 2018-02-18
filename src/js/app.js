@@ -70,6 +70,20 @@ App = {
       App.contracts.PutUpOrShutUp.setProvider(App.web3Provider);
     
       // Use our contract to retrieve and mark the adopted pets
+      return App.testPutUpOrShutUp();
+    });
+
+    $.getJSON('Bet.json', function(data) {
+
+      // Get the necessary contract artifact file and instantiate it with truffle-contract
+      var BetArtifact = data;
+      window.BetArtifact = BetArtifact;
+      App.contracts.Bet = TruffleContract(BetArtifact);
+    
+      // Set the provider for our contract
+      App.contracts.Bet.setProvider(App.web3Provider);
+    
+      // Use our contract to retrieve and mark the adopted pets
       return App.testBet();
     });
 
@@ -78,17 +92,19 @@ App = {
 
   bindEvents: function() {
     $(document).on('click', '.btn-adopt', App.handleAdopt);
-    $('#test-btn').click(App.betButton)
+    //$('#test-btn').click(App.betButton)
   },
 
+  /*
   betButton: function() {
     console.log("-----")
     let a = new Bet(App.contracts, App.ipfs)
     a.getFundingStatus()
   },
+  */
 
-  testBet: function() {
-    console.log("Hello world!");  
+  testPutUpOrShutUp: function() {
+    console.log("testPutUpOrShutUp");  
 
     var betInstance;
 
@@ -96,7 +112,45 @@ App = {
     App.contracts.PutUpOrShutUp.deployed().then(function(instance) {
       betInstance = instance;
     
-      return betInstance.getDemoBet();
+      return betInstance.getDemoBet.call();
+    }).then(function(response) {
+      
+      console.log("-----")
+      console.log(response);
+      console.log("-----")
+
+    }).catch(function(err) {
+      console.log(err.message);
+    });
+
+  },
+
+  testBet: function() {
+    console.log("testBet");  
+
+    var betInstance;
+
+    /*
+    App.contracts.Bet.deployed().then(function(instance) {
+      betInstance = instance;
+    
+      return betInstance.resolveBet.call();
+    }).catch(function(err) {
+      console.log(err.message);
+    });
+    */
+
+    var betInstance2 = App.contracts.Bet.at("0xbbe595df857805ab3734f15be990f9a30cbb89f3");
+    console.log("==========");
+    console.log(betInstance2);
+    console.log("==========");
+
+    App.contracts.Bet.deployed().then(function(instance) {
+      betInstance = instance;
+      console.log(instance.address);
+
+    
+      return betInstance.getBetInfo();
     }).then(function(response) {
       
       console.log(response);
@@ -105,29 +159,6 @@ App = {
       console.log(err.message);
     });
 
-/*
-    App.contracts.PutUpOrShutUp.deployed().then(function(instance) {
-      betInstance = instance;
-    
-      return betInstance.resolveBet.call();
-    }).catch(function(err) {
-      console.log(err.message);
-    });
-
-    App.contracts.PutUpOrShutUp.deployed().then(function(instance) {
-      betInstance = instance;
-    
-      return betInstance.getBetInfo.call();
-    }).then(function(p1Address, p1AmountOwed, p1AmountPaid, p2Address, p2AmountOwed, p2AmountPaid, arbAddress, arbReward) {
-      
-      console.log(p1Address);
-      console.log(p2Address);
-      console.log(arbAddress);
-
-    }).catch(function(err) {
-      console.log(err.message);
-    });
-*/
   },
 
   markAdopted: function(adopters, account) {
