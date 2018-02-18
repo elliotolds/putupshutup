@@ -158,7 +158,7 @@ function acceptedBetView(bet) {
           <br> 
           <a href="#">${bet.instigatorAddress}</a> <span class="text-muted">bets</span> <a href="#">${bet.targetAddress}</a>
           <br>
-          1.00 eth <span class="text-muted small"> <!--on </span> 2.18.2018-->
+          ${bet.instigatorBetAmount} vs ${bet.targetBetAmount} eth <span class="text-muted small"> <!--on </span> 2.18.2018-->
           <br>
           <a href="bet.html?id=${bet.betId}" class="link small text-truncate">View Bet</a>
       </div>
@@ -178,7 +178,7 @@ function proposedBetView(bet) {
           <br> 
           <a href="#">${bet.instigatorAddress}</a> <span class="text-muted">bets</span> <a href="#">${bet.targetAddress}</a>
           <br>
-          1.00 eth <span class="text-muted small"><!-- on </span> 2.18.2018-->
+          ${bet.instigatorBetAmount} vs ${bet.targetBetAmount} eth <span class="text-muted small"><!-- on </span> 2.18.2018-->
           <br>
           <a href="bet.html?id=${bet.betId}" class="link small text-truncate">View Bet</a>
       </div>
