@@ -25,7 +25,7 @@ App = {
       // If no injected web3 instance is detected, fall back to Ganache
       App.web3Provider = new Web3.providers.HttpProvider('http://localhost:7545');
     }
-    web3 = new Web3(App.web3Provider);
+    App.web3 = new Web3(App.web3Provider);
 
     return App.initContract();
   },
@@ -86,10 +86,10 @@ App = {
     newBetProperties.descriptionText = document.getElementById('bet-language').value;
     newBetProperties.instigatorHandle = document.getElementById('bettor-twitter').value;
     newBetProperties.instigatorAddress = document.getElementById('bettor-wallet').value;
-    newBetProperties.instigatorBetAmount = document.getElementById('bettor-amount').value;
+    newBetProperties.instigatorBetAmount = App.web3.toWei(document.getElementById('bettor-amount').value)
     newBetProperties.takerHandle = document.getElementById('taker-twitter').value;
     newBetProperties.targetAddress = document.getElementById('taker-wallet').value;
-    newBetProperties.targetBetAmount = document.getElementById('taker-amount').value;
+    newBetProperties.targetBetAmount = App.web3.toWei(document.getElementById('taker-amount').value)
     newBetProperties.arbiterHandle = document.getElementById('arbiter-twitter').value;
     newBetProperties.arbiterAddress = document.getElementById('arbiter-wallet').value;
     newBetProperties.arbiterFee = document.getElementById('arbiter-amount').value;
