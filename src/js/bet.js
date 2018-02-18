@@ -8,9 +8,11 @@ class BetDescription {
     }
 
     setAddress(addr) {
-        this.ipfsAddress = addr
-        this.description = ""
-        //load desctiption from ipfs
+        if (addr && addr != "") {
+            this.ipfsAddress = addr
+            this.description = ""
+            //load desctiption from ipfs
+        }
     }
 
     setText(text) {
@@ -27,7 +29,7 @@ class BetDescription {
     }
 
     getText() {
-        if (this.description = "" && this.ipfsAddress != "") {
+        if (this.description == "" && this.ipfsAddress != "") {
             //load from ipfs
             //this.description = 
         }
@@ -42,6 +44,8 @@ class Bet {
         if (contracts == null || ipfs == null) {
             throw "invalid params"
         }
+        this.contracts = contracts
+        this.ipfs = ipfs
 
         this.loadedFromContract = false
 
@@ -53,8 +57,9 @@ class Bet {
         this.description = new BetDescription(this.ipfs)
         let descriptionText = initial.descriptionText || ""
         let descriptionAddress = initial.descriptionAddress || ""
-        this.description.setText(descriptionText)
+        this.description.setText(descriptionText)        
         this.description.setAddress(descriptionAddress)
+
 
         this.title = initial.title || ""
         this.instigatorAddress = initial.instigatorAddress || ""
@@ -63,13 +68,38 @@ class Bet {
         this.targetBetAmount = initial.targetBetAmount || 0
         this.arbiterAddress = initial.arbiterAddress || ""
         this.arbiterFee = initial.arbiterFee || 0
+
+        this.descriptionText = initial.descriptionText || ""
+        this.instigatorHandle = initial.instigatorHandle || ""
+        this.targetHandle = initial.targetHandle || ""
     }
 
     create() {
         //validate
         //ipfs description
-        let ipft_addr = this.description.getAddress()
+        let ipft_addr = "hashhashhash"// this.description.getAddress()
         //web3 create contract
+
+        var betInstance
+        this.contracts.PutUpOrShutUp.deployed().then(instance => {
+            betInstance = instance;
+          
+            return betInstance.startNewBet(this.instigatorAddress, this.instigatorBetAmount, this.targetAddress, this.targetBetAmount, this.arbiterAddress, this.arbiterFee, ipft_addr);
+          }).then(function(response) {
+            
+            console.log("-----")
+            console.log(response);
+            console.log("-----")
+          }).then(function(){
+              return betInstance.getBet(ipft_addr)
+          }).then(function(response){
+            console.log("-----")
+            console.log(response);
+            console.log("-----")              
+          }).catch(function(err) {
+            console.log(err.message);
+          });
+      
         //this.betId = 
     }
 
@@ -88,11 +118,13 @@ class Bet {
     }
 
     status() {
-        if(this.betId == "") {
-            return "uninitilized"
-        }
+        // if(this.betId == "") {
+        //     return "uninitilized"
+        // }
         //web3 check
         // return 'open', 'accepted', 'closed' ?
+        let responses = ['uninitilized', 'open', 'accepted', 'closed'] //TEST
+        return responses[Math.floor(Math.random()*responses.length)] //TEST
     }
 
     fundInFull() {
@@ -106,10 +138,33 @@ class Bet {
 
         //web3 grab funding status
     }
+
+    wonBet() {
+        let responses = [true, false] //TEST
+        return responses[Math.floor(Math.random()*responses.length)] //TEST
+        return false //TODO
+    }
  }
 
- function getAllMyBets() {
-     return []
+ function getAllMyBets(contracts, ipfs) {
+     let dummyData = {
+        arbiterAddress: "0x627306090abaB3A6e1400e9345bC60c78a8BEf57",
+        arbiterFee: "0.01",
+        betId: "ABCDE",
+        descriptionText: "bet @TheOnion is not completly accurate.",
+        instigatorAddress: "0x627306090abaB3A6e1400e9345bC60c78a8BEf57",
+        instigatorBetAmount: "1.00",
+        loadedFromContract: true,
+        targetAddress: "0x627306090abaB3A6e1400e9345bC60c78a8BEf57",
+        targetBetAmount: "1.55",
+        title: "Someone was wrong on the Interwebs!"
+     }
+
+     let builder = () => betBuilder(contracts, ipfs)(dummyData)
+     let a = builder({title: "title 1"})
+     let b = builder({title: "the king"})
+     let c = builder({title: "kaboom"})
+     return [a,b,c, builder(dummyData), builder(), builder(), builder(), builder(), builder(), builder(), builder(), builder()]
  }
 
  function betBuilder(contracts, ipfs) {

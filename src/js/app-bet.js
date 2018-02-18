@@ -41,22 +41,8 @@ App = {
       App.contracts.Bet.setProvider(App.web3Provider);
     
       // Use our contract to retrieve and mark the adopted pets
-      //return App.loadBets();
+      return App.loadBets();
     });
-
-    $.getJSON('PutUpOrShutUp.json', function(data) {
-
-      // Get the necessary contract artifact file and instantiate it with truffle-contract
-      var PutUpOrShutUpArtifact = data;
-      App.contracts.PutUpOrShutUp = TruffleContract(PutUpOrShutUpArtifact);
-    
-      // Set the provider for our contract
-      App.contracts.PutUpOrShutUp.setProvider(App.web3Provider);
-    
-      // Use our contract to retrieve and mark the adopted pets
-      //return App.loadBets();
-    });
-
 
     return App.bindEvents();
   },
@@ -69,15 +55,10 @@ App = {
     $('#create-bet-btn').click(App.betButton)
   },
 
-  betButton: function(e) {
-    e.preventDefault();
+  betButton: function() {
     let a = new Bet(App.contracts, App.ipfs, App.getBetFormValues());
-    // a.getFundingStatus()
-    if(!a.create()) {
-      //something 
-    }
-    console.log(a)
-  
+    debugger;
+    a.getFundingStatus()
   },
 
   getBetFormValues: function() {
@@ -99,31 +80,51 @@ App = {
 
   loadBet: function() {
     let bet = new Bet(App.contracts, App.ipfs, App.dummyData());
+    console.log("loaded bet: ", bet);
+    
+    App.updateBetUI(bet);
+
     return bet;
   },
 
   dummyData: function() {
-    var betData = {
-      arbiterAddress: "0x627306090abaB3A6e1400e9345bC60c78a8BEf57",
-      arbiterFee: "0.01",
-      arbiterHandle: "@",
-      descriptionText: "Donec erat velit, ullamcorper vel libero sit amet, porta lobortis velit. Vestibulum varius eros at pulvinar consequat. Sed mi lorem, scelerisque nec odio sed, laoreet laoreet purus. Vestibulum laoreet consectetur arcu, vel vehicula odio pellentesque id. Fusce interdum, eros eu egestas sollicitudin, massa neque molestie lectus, non placerat est ante a urna.",
-      instigatorAddress: "0x627306090abaB3A6e1400e9345bC60c78a8BEf57",
-      instigatorBetAmount: "0.00",
-      instigatorHandle: "@",
-      takerHandle: "@",
-      targetAddress: "0x627306090abaB3A6e1400e9345bC60c78a8BEf57",
-      targetBetAmount: "0.00",
-      title: "Lorem ipsum dolor sit amet, consectetur adipiscing elit"
-    }
+    var betData = {};
+    betData.arbiterAddress = "0x627306090abaB3A6e1400e9345bC60c78a8BEf57"
+    betData.arbiterFee = "0.0005"
+    betData.arbiterHandle = "@impartial_judge"
+    betData.descriptionText = "Donec erat velit, ullamcorper vel libero sit amet, porta lobortis velit. Vestibulum varius eros at pulvinar consequat. Sed mi lorem, scelerisque nec odio sed, laoreet laoreet purus. Vestibulum laoreet consectetur arcu, vel vehicula odio pellentesque id. Fusce interdum, eros eu egestas sollicitudin, massa neque molestie lectus, non placerat est ante a urna."
+    betData.instigatorAddress = "0x627306090abaB3A6e1400e9345bC60c78a8BEf57"
+    betData.instigatorBetAmount = "0.005"
+    betData.instigatorHandle = "@rational_talker"
+    betData.targetHandle = "@mean_guy"
+    betData.targetAddress = "0x627306090abaB3A6e1400e9345bC60c78a8BEf57"
+    betData.targetBetAmount = "0.005"
+    betData.title = "Lorem ipsum dolor sit amet, consectetur adipiscing elit"
 
     return betData;
-  }
+  },
+
+  updateBetUI: function(bet) {
+    document.getElementById('bet-title').innerHTML = bet.title;
+    document.getElementById('bet-description').innerHTML = bet.descriptionText;
+    document.getElementById('bettor-twitter').value = bet.instigatorHandle;
+    document.getElementById('bettor-wallet').value = bet.instigatorAddress;
+    document.getElementById('bettor-amount').value = bet.instigatorBetAmount;
+    document.getElementById('taker-twitter').value = bet.targetHandle;
+    document.getElementById('taker-wallet').value = bet.targetAddress;
+    document.getElementById('taker-amount').value = bet.targetBetAmount;
+
+    document.getElementById('metamask-id').innerHTML = "something";
+
+    console.log("updated ui with bet detail");
+    return;
+  },
 
 };
 
 $(function() {
   $(window).load(function() {
     App.init();
+    App.loadBet();
   });
 });
