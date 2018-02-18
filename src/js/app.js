@@ -213,7 +213,7 @@ App = {
 
   },
 
-  /*
+  
   resolveBet: function() {
     console.log("resolveBet");  
 
@@ -235,22 +235,80 @@ App = {
     });
 
   },
+  
+  
+  withdrawBeforeBetLocked: function() {
+    console.log("withdrawBeforeBetLocked");  
+
+    var betInstance;
+
+
+    App.contracts.Bet.deployed().then(function(instance) {
+      betInstance = instance;
+    
+      return betInstance.withdrawBeforeBetLocked();
+    }).then(function(response) {
+      
+      console.log("+++++")
+      console.log(response);
+      console.log("+++++");
+  
+    }).catch(function(err) {
+      console.log(err.message);
+    });
+
+  },
+
+  agreeToArbitrate: function() {
+    console.log("agreeToArbitrate");  
+
+    var betInstance;
+
+
+    App.contracts.Bet.deployed().then(function(instance) {
+      betInstance = instance;
+    
+      return betInstance.agreeToArbitrate();
+    }).then(function(response) {
+      
+      console.log("+++++")
+      console.log(response);
+      console.log("+++++");
+  
+    }).catch(function(err) {
+      console.log(err.message);
+    });
+
+  },
+
+  /*
+  disperseAllFunds: function() {
+    console.log("disperseAllFunds");  
+
+    var betInstance;
+
+
+    App.contracts.Bet.deployed().then(function(instance) {
+      betInstance = instance;
+    
+      return betInstance.disperseAllFunds();
+    }).then(function(response) {
+      
+      console.log("+++++")
+      console.log(response);
+      console.log("+++++");
+  
+    }).catch(function(err) {
+      console.log(err.message);
+    });
+
+  },
   */
 
   testBet: function() {
     console.log("testBet");  
 
     var betInstance;
-
-    /*
-    App.contracts.Bet.deployed().then(function(instance) {
-      betInstance = instance;
-    
-      return betInstance.resolveBet.call();
-    }).catch(function(err) {
-      console.log(err.message);
-    });
-    */
 
     var betInstance2 = App.contracts.Bet.at("0xbbe595df857805ab3734f15be990f9a30cbb89f3");
     console.log("==========");
@@ -265,6 +323,13 @@ App = {
       return betInstance.getBetInfo();
     }).then(function(response) {
       
+      console.log("getBetInfo");
+      console.log(response);
+      return betInstance.getBetResolutionInfo();
+      
+    }).then(function(response) {
+      
+      console.log("getBetResolutionInfo");
       console.log(response);
 
     }).catch(function(err) {
