@@ -161,6 +161,62 @@ App = {
 
   },
 
+  
+  getAllDataForHash: function() {
+    console.log("getAllDataForHash");  
+
+    var putUpShutUpInstance;
+    var betInstance;
+
+    App.contracts.PutUpOrShutUp.deployed().then(function(instance) {
+      putUpShutUpInstance = instance;
+    
+      return putUpShutUpInstance.getBet.call("fdksfhsdfdkasfjsdklaf");
+    }).then(function(response) {
+      
+      console.log("+++++")
+      console.log(response);
+      console.log("+++++");
+
+      betInstance = App.contracts.Bet.at(response);
+      console.log("==========");
+      console.log(betInstance);
+      console.log("==========");
+
+      return betInstance.getBetInfo();
+    }).then(function(response) {
+      
+      console.log("getBetInfo");
+      console.log(response);
+
+      var p1Address = response[0];
+      var p1Owes = web3.fromWei(response[1].toNumber(), "ether");
+      var p1Paid = web3.fromWei(response[2].toNumber(), "ether");
+      var p2Address = response[3];
+      var p2Owes = web3.fromWei(response[4].toNumber(), "ether");
+      var p2Paid = web3.fromWei(response[5].toNumber(), "ether");
+      var arbAddress = response[6];
+      var arbReward = web3.fromWei(response[7].toNumber(), "ether");
+      var betLockedIn = response[8];
+      var arbitorAgreed = response[9];
+      var arbiterDidWork = response[10];
+      
+      return betInstance.getBetResolutionInfo();
+      
+    }).then(function(response) {
+      
+      console.log("getBetResolutionInfo");
+      console.log(response);
+      var p1Resolution = response[0];
+      var p2Resolution = response[1];
+      var arbiterResolution = response[2];
+      var officialResolution = response[3];
+
+    }).catch(function(err) {
+      console.log(err.message);
+    });
+
+  },
 
   depositMoney: function() {
     console.log("depositMoney");  
