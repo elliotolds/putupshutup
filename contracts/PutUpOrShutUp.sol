@@ -196,8 +196,14 @@ contract Bet {
 
   }
 
-  function getBetInfo() public view returns (address, uint, uint, address, uint, uint, address, uint) {
-    return (p1Address, p1AmountOwed, p1AmountPaid, p2Address, p2AmountOwed, p2AmountPaid, arbAddress, arbReward);
+  function getBetInfo() public view returns (address, uint, uint, address, uint, uint, address, uint, 
+    bool locked, bool arbAgreed, bool arbWorked) {
+    return (p1Address, p1AmountOwed, p1AmountPaid, p2Address, p2AmountOwed, p2AmountPaid, arbAddress, arbReward,
+      betLockedIn, arbitorAgreed, arbiterDidWork);
+  }
+
+  function getBetResolutionInfo() public view returns( Resolution p1Res, Resolution p2Res, Resolution arbRes, Resolution officialRes) {
+      return(p1Resolution, p2Resolution, arbiterResolution, officialResolution);
   }
 
 }
