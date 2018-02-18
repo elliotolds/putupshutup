@@ -112,12 +112,48 @@ App = {
     App.contracts.PutUpOrShutUp.deployed().then(function(instance) {
       betInstance = instance;
     
-      return betInstance.getDemoBet.call();
+      return betInstance.startNewBet(
+        "0xf17f52151EbEF6C7334FAD080c5704D77216b732", 
+        10, 
+        "0x627306090abaB3A6e1400e9345bC60c78a8BEf57", 
+        10, 
+        "0xC5fdf4076b8F3A5357c5E395ab970B5B54098Fef",
+        2,
+        "fdksfhsdfdkasfjsdklaf");
     }).then(function(response) {
       
       console.log("-----")
       console.log(response);
       console.log("-----")
+
+    }).catch(function(err) {
+      console.log(err.message);
+    });
+
+  },
+
+
+  getBetForHash: function() {
+    console.log("getBetForHash");  
+
+    var betInstance;
+
+
+    App.contracts.PutUpOrShutUp.deployed().then(function(instance) {
+      betInstance = instance;
+    
+      return betInstance.getBet.call("fdksfhsdfdkasfjsdklaf");
+    }).then(function(response) {
+      
+      console.log("+++++")
+      console.log(response);
+      console.log("+++++");
+
+      var betInstance2 = App.contracts.Bet.at(response);
+      console.log("==========");
+      console.log(betInstance2);
+      console.log("==========");
+  
 
     }).catch(function(err) {
       console.log(err.message);
