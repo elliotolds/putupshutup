@@ -6988,3 +6988,7 @@ footer a:hover {
 .green {
   background-color: #35DC5B;
 }
+
+.hidden {
+  visibility: hidden !important;
+}

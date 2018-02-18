@@ -55,6 +55,19 @@ App = {
     return App.bindEvents();
   },
 
+  getCurrentAccount: function() {
+    App.currentAccount = App.web3.eth.defaultAccount;
+    App.showCurrentAccountButtons();
+  },
+
+  showCurrentAccountButtons: function() {
+    if (App.currentAccount == App.bet.instigatorAddress.toLowerCase()) {
+      $('#bettor-funds-btn').removeClass('hidden');
+    } else if (App.currentAccount == App.bet.targetAddress.toLowerCase()) {
+      $('#taker-funds-btn').removeClass('hidden');
+    }
+  },
+
   bindEvents: function() {
     $('#create-bet-btn').click(App.betButton);
     $('#bettor-wins-btn').click({winner: "bettor"}, App.voteWinner);
@@ -80,7 +93,10 @@ App = {
     let bet = new Bet(App.contracts, App.ipfs, App.dummyData());
     console.log("loaded bet: ", bet);
     
+    App.bet = bet;
     App.updateBetUI(bet);
+
+    App.getCurrentAccount();
 
     return bet;
   },
@@ -95,7 +111,7 @@ App = {
     betData.instigatorBetAmount = "0.005"
     betData.instigatorHandle = "@rational_talker"
     betData.targetHandle = "@mean_guy"
-    betData.targetAddress = "0x627306090abaB3A6e1400e9345bC60c78a8BEf57"
+    betData.targetAddress = "0x36fa562926C17328AA93e02CA33a423a0636142B"
     betData.targetBetAmount = "0.005"
     betData.title = "Lorem ipsum dolor sit amet, consectetur adipiscing elit"
 
